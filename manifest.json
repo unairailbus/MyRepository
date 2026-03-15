@@ -1,25 +1,11 @@
 {
-  "name": "List",
-  "short_name": "List",
-  "description": "Simple grocery list app",
-  "start_url": "https://unairailbus.github.io/MyRepository/",
-  "scope": "https://unairailbus.github.io/MyRepository/",
-  "display": "standalone",
-  "orientation": "portrait",
   "background_color": "#ffffff",
-  "theme_color": "#3498db",
-  "icons": [
-    {
-      "src": "icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
-    }
-  ]
+  "dir": "auto",
+  "display": "standalone",
+  "name": "unairailbus.github",
+  "orientation": "any",
+  "scope": "https://unairailbus.github.io/MyRepository/",
+  "short_name": "unairailbus.github",
+  "start_url": "https://unairailbus.github.io/MyRepository/",
+  "theme_color": "#ffffff"
 }
