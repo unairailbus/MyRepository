@@ -4,6 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>List</title>
+
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#3498db">
+<link rel="apple-touch-icon" href="icon-192.png">
+
 <style>
 body{margin:0;background:#f2f2f2;font-family:Arial;display:flex;justify-content:center;}
 #app{width:100%;max-width:360px;min-height:100vh;background:white;padding:20px;box-sizing:border-box;}
@@ -25,6 +30,7 @@ li{background:#fafafa;margin:6px 0;padding:10px;border-radius:6px;display:flex;j
 .sectionHeader{display:flex;justify-content:space-between;align-items:center;padding-right:10px;}
 </style>
 </head>
+
 <body>
 <div id="app">
   <div class="header-container">
@@ -63,6 +69,7 @@ li{background:#fafafa;margin:6px 0;padding:10px;border-radius:6px;display:flex;j
 </div>
 
 <script>
+
 let groceryList = JSON.parse(localStorage.getItem("groceryList")) || []
 let historyList = JSON.parse(localStorage.getItem("historyList")) || []
 
@@ -77,7 +84,7 @@ function render(){
     li.innerHTML = `
       <span>${item}</span>
       <div class="buttonGroup">
-        <button class="doneBtn" onclick="toggleDone(this)">✓</button>
+        <button class="doneBtn" onclick="toggleDone(this)">?</button>
         <button class="deleteBtn" onclick="moveToHistory(${index})">X</button>
       </div>`
     list.appendChild(li)
@@ -89,7 +96,7 @@ function render(){
     li.innerHTML = `
       <span>${item}</span>
       <div class="buttonGroup">
-        <button class="historyAdd" onclick="copyToList(${index})">↑</button>
+        <button class="historyAdd" onclick="copyToList(${index})">?</button>
         <button class="historyDelete" onclick="deleteHistory(${index})">X</button>
       </div>`
     history.appendChild(li)
@@ -130,7 +137,7 @@ function toggleDone(button){
 
 async function shareList(){
   if(groceryList.length === 0){ alert("Your list is empty!"); return }
-  const text = "🛒 My Grocery List\n\n" + groceryList.map(item => "• " + item).join("\n")
+  const text = "?? My Grocery List\n\n" + groceryList.map(item => "• " + item).join("\n")
   if(navigator.share){
     try { await navigator.share({ title: "Grocery List", text }) }
     catch(e){ if(e.name !== "AbortError") fallbackCopy(text) }
@@ -144,6 +151,7 @@ function fallbackCopy(text){
 }
 
 render()
+
 </script>
 </body>
 </html>
