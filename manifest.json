@@ -1,7 +1,7 @@
 {
   "name": "List",
   "short_name": "List",
-  "description": "Simple grocery list app",
+  "description": "Simple list app",
   "start_url": "https://unairailbus.github.io/MyRepository/",
   "scope": "standalone",
   "display": "standalone",
