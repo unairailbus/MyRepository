@@ -122,7 +122,8 @@ function moveToHistory(index){
 }
 
 function copyToList(index){
-  groceryList.push(historyList[index])
+  const item = historyList.splice(index, 1)[0]
+  groceryList.push(item)
   render()
 }
 
