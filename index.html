@@ -138,7 +138,7 @@ function toggleDone(button){
 
 async function shareList(){
   if(groceryList.length === 0){ alert("Your list is empty!"); return }
-  const text = "🛒 My Grocery List\n\n" + groceryList.map(item => "• " + item).join("\n")
+  const text = "🛒 LIST\n\n" + groceryList.map(item => "• " + item).join("\n")
   if(navigator.share){
     try { await navigator.share({ title: "Grocery List", text }) }
     catch(e){ if(e.name !== "AbortError") fallbackCopy(text) }
