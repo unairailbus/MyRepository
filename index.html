@@ -20,7 +20,8 @@ h1{margin:0;font-size:24px;}
 button{width:40px;height:40px;padding:0;font-size:16px;font-weight:bold;cursor:pointer;border:none;color:white;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .addBtn,.doneBtn.active,.historyAdd{background:#2ecc71;}
 .shareBtn{background:#3498db;}
-.doneBtn,.deleteBtn,.historyDelete{background:#e74c3c;}
+.doneBtn{background:#cccccc;color:#555;}
+.deleteBtn,.historyDelete{background:#e74c3c;}
 .doneBtn,.historyAdd{margin-right:5px;}
 .addBtn{font-size:22px;}
 ul{list-style:none;padding:0;}
@@ -64,8 +65,15 @@ li{background:#fafafa;margin:6px 0;padding:10px;border-radius:6px;display:flex;j
 
   <ul id="list"></ul>
 
-  <h3>History</h3>
+  <div class="sectionHeader">
+    <h3>History</h3>
+    <div style="display:flex;gap:6px;">
+      <button onclick="copyAllHistory()" style="background:#e67e22;color:white;border:none;border-radius:6px;padding:6px 12px;font-size:13px;font-weight:bold;cursor:pointer;">Copy ALL</button>
+      <button onclick="alert('Make sure to push Copy ALL before, then paste the list to:\nhttps://gemini.google.com'); window.open('https://gemini.google.com/','_blank')" style="background:linear-gradient(135deg,#4285F4,#8A2BE2,#E91E8C);color:white;border:none;border-radius:6px;padding:6px 12px;font-size:13px;font-weight:bold;cursor:pointer;">Ask AI</button>
+    </div>
+  </div>
   <ul id="history"></ul>
+
 </div>
 
 <script>
@@ -134,6 +142,23 @@ function deleteHistory(index){
 
 function toggleDone(button){
   button.classList.toggle("active")
+}
+
+function copyAllHistory(){
+  if(historyList.length === 0){ alert("Your history is empty!"); return }
+  const text = "Based on a healthy diet index, what score would you give each item in my list, and what's the overall score?\n\n" + historyList.map(item => "• " + item).join("\n")
+  navigator.clipboard.writeText(text)
+    .then(() => alert("Hurray!! List copied, push Ask AI"))
+    .catch(() => alert("Could not copy to clipboard."))
+}
+
+async function shareHistory(){
+  if(historyList.length === 0){ alert("Your history is empty!"); return }
+  const text = "Based on a healthy diet index, what score would you give each item in my list, and what's the overall score?\n\n" + historyList.map(item => "• " + item).join("\n")
+  if(navigator.share){
+    try { await navigator.share({ text }) }
+    catch(e){ if(e.name !== "AbortError") fallbackCopy(text) }
+  } else { fallbackCopy(text) }
 }
 
 async function shareList(){
