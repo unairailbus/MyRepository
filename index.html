@@ -143,7 +143,7 @@ function toggleDone(button){
 
 function copyAllHistory(){
   if(historyList.length === 0){ alert("Your history is empty!"); return }
-  const text = "Act as a nutritionist. Based on a healthy diet index, give a score (0-10) to each food item listed below and provide an overall average. Exclude all nonfood items, give no explanation for the exclusion. Strictly provide your entire response in the same language as the list items.\n\n" + historyList.map(item => "• " + item).join("\n")
+  const text = "Act as a nutritionist. Based on a healthy diet index, give a score (0-10) to each food item listed below and provide an overall average. Exclude nonfood items, do not explain the exclusion. Do not add any additional information. Strictly provide your entire response in the same language as the list items.\n\n" + historyList.map(item => "• " + item).join("\n")
   navigator.clipboard.writeText(text)
     .then(() => alert("Hurray!! List copied, push Ask AI"))
     .catch(() => alert("Could not copy to clipboard."))
@@ -151,7 +151,7 @@ function copyAllHistory(){
 
 async function askAI(){
   if(historyList.length === 0){ alert("Your history is empty!"); return }
-  const text = "Act as a nutritionist. Based on a healthy diet index, give a score (0-10) to each food item listed below and provide an overall average. Exclude all nonfood items, give no explanation for the exclusion. Strictly provide your entire response in the same language as the list items.\n\n" + historyList.map(item => "• " + item).join("\n")
+  const text = "Act as a nutritionist. Based on a healthy diet index, give a score (0-10) to each food item listed below and provide an overall average. Exclude nonfood items, do not explain the exclusion. Do not add any additional information. Strictly provide your entire response in the same language as the list items.\n\n" + historyList.map(item => "• " + item).join("\n")
   try {
     await navigator.clipboard.writeText(text)
     alert("Ask AI, PASTE message to: gemini.google.com")
@@ -163,7 +163,7 @@ async function askAI(){
 
 async function shareHistory(){
   if(historyList.length === 0){ alert("Your history is empty!"); return }
-  const text = "Act as a nutritionist. Based on a healthy diet index, give a score (0-10) to each food item listed below and provide an overall average. Exclude all nonfood items, give no explanation for the exclusion. Strictly provide your entire response in the same language as the list items.\n\n" + historyList.map(item => "• " + item).join("\n")
+  const text = "Act as a nutritionist. Based on a healthy diet index, give a score (0-10) to each food item listed below and provide an overall average. Exclude nonfood items, do not explain the exclusion. Do not add any additional information. Strictly provide your entire response in the same language as the list items.\n\n" + historyList.map(item => "• " + item).join("\n")
   if(navigator.share){
     try { await navigator.share({ text }) }
     catch(e){ if(e.name !== "AbortError") fallbackCopy(text) }
