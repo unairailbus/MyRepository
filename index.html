@@ -67,10 +67,7 @@ li{background:#fafafa;margin:6px 0;padding:10px;border-radius:6px;display:flex;j
 
   <div class="sectionHeader">
     <h3>History</h3>
-    <div style="display:flex;gap:6px;">
-      <button onclick="copyAllHistory()" style="background:#e67e22;color:white;border:none;border-radius:6px;padding:6px 12px;font-size:13px;font-weight:bold;cursor:pointer;">Copy ALL</button>
-      <button onclick="alert('Make sure to push Copy ALL before, then paste the list to:\nhttps://gemini.google.com'); window.open('https://gemini.google.com/','_blank')" style="background:linear-gradient(135deg,#4285F4,#8A2BE2,#E91E8C);color:white;border:none;border-radius:6px;padding:6px 12px;font-size:13px;font-weight:bold;cursor:pointer;">Ask AI</button>
-    </div>
+    <button onclick="askAI()" style="background:linear-gradient(135deg,#4285F4,#8A2BE2,#E91E8C);color:white;border:none;border-radius:6px;padding:6px 12px;font-size:13px;font-weight:bold;cursor:pointer;">Ask AI</button>
   </div>
   <ul id="history"></ul>
 
@@ -93,7 +90,7 @@ function render(){
       <span>${item}</span>
       <div class="buttonGroup">
         <button class="doneBtn" onclick="toggleDone(this)">✓</button>
-        <button class="deleteBtn" onclick="moveToHistory(${index})">X</button>
+        <button class="deleteBtn" onclick="moveToHistory(${index})">↓</button>
       </div>`
     list.appendChild(li)
   })
@@ -146,15 +143,27 @@ function toggleDone(button){
 
 function copyAllHistory(){
   if(historyList.length === 0){ alert("Your history is empty!"); return }
-  const text = "Based on a healthy diet index, what score would you give each item in my list, and what's the overall score?\n\n" + historyList.map(item => "• " + item).join("\n")
+  const text = "Act as a nutritionist. Based on a healthy diet index, give a score (0-10) to each food item listed below and provide an overall average. Strictly provide your entire response in the same language as the list items.\n\n" + historyList.map(item => "• " + item).join("\n")
   navigator.clipboard.writeText(text)
     .then(() => alert("Hurray!! List copied, push Ask AI"))
     .catch(() => alert("Could not copy to clipboard."))
 }
 
+async function askAI(){
+  if(historyList.length === 0){ alert("Your history is empty!"); return }
+  const text = "Act as a nutritionist. Based on a healthy diet index, give a score (0-10) to each food item listed below and provide an overall average. Strictly provide your entire response in the same language as the list items.\n\n" + historyList.map(item => "• " + item).join("\n")
+  try {
+    await navigator.clipboard.writeText(text)
+    alert("Ask AI, PASTE message to: gemini.google.com")
+  } catch(e) {
+    alert("Could not copy to clipboard. Please copy manually.")
+  }
+  window.open('https://gemini.google.com/', '_blank')
+}
+
 async function shareHistory(){
   if(historyList.length === 0){ alert("Your history is empty!"); return }
-  const text = "Based on a healthy diet index, what score would you give each item in my list, and what's the overall score?\n\n" + historyList.map(item => "• " + item).join("\n")
+  const text = "Act as a nutritionist. Based on a healthy diet index, give a score (0-10) to each food item listed below and provide an overall average. Strictly provide your entire response in the same language as the list items.\n\n" + historyList.map(item => "• " + item).join("\n")
   if(navigator.share){
     try { await navigator.share({ text }) }
     catch(e){ if(e.name !== "AbortError") fallbackCopy(text) }
